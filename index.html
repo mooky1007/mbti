@@ -12,27 +12,33 @@
   <div class="container">
     <section class="top_area">
       <div class="title_area">
-        <p>1/6</p>
+        <p>
+          <span id="current">1</span>
+          <span>/</span>
+          <span id="max">6</span>
+        </p>
       </div>
       <div class="progress_area">
         <div class="progress_bar">
-          <div class="progress_bar_inner"></div>
+          <div class="progress_bar_inner" id="progress"></div>
         </div>
       </div>
     </section>
     <section class="content_area">
-      <div class="image_box">
+      <div class="image_box" id="image">
         <img src="./assets/images/q1.png" alt="">
       </div>
     </section>
     <div class="text_area">
-      <p>당신은 얼마나 멀리까지 비출 수 있나요?</p>
+      <p id="question">당신은 얼마나 멀리까지 비출 수 있나요?</p>
     </div>
     <section class="button_area">
-      <button>멀리까지 환히 비출 수 있어요!</button>
-      <button>가까운 곳만 은은히 비추는 게 좋아요.</button>
+      <button id="answer01">멀리까지 환히 비출 수 있어요!</button>
+      <button id="answer02">가까운 곳만 은은히 비추는 게 좋아요.</button>
     </section>
   </div>
+
+  <script src="./js/main.js"></script>
 </body>
 
 </html>

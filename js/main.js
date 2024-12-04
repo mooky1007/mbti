@@ -44,7 +44,7 @@ const answer02 = document.querySelector('#answer02');
 const renderQuestion = () => {
     current.innerText = currentIdx + 1;
     max.innerText = data.length;
-    progress.style.width = `${((currentIdx + 1) / data.length) * 100}%`;
+    progress.style.transform = `scaleX(${(currentIdx + 1) / data.length})`;
     img.setAttribute('src', `./assets/images/q${currentIdx + 1}.png`);
     text.innerText = data[currentIdx].q;
     answer01.innerText = data[currentIdx].a[0];
@@ -72,21 +72,10 @@ const outAnimation = () => {
         text.classList.remove('fade-up');
         img.classList.remove('fade-up');
         buttonWrap.classList.remove('fade-up');
-        inAnimation();
     }, 600);
 };
 
-const inAnimation = () => {
-    text.classList.add('fade-down');
-    img.classList.add('fade-down');
-    buttonWrap.classList.add('fade-down');
-
-    setTimeout(() => {
-        text.classList.add('fade-down');
-        img.classList.add('fade- down');
-        buttonWrap.classList.add('fade-down');
-    }, 600);
-};
+const inAnimation = () => {};
 
 const startTest = () => {
     outAnimation();

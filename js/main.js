@@ -88,7 +88,7 @@ const submitAnswer = async (e, idx) => {
             return acc + char;
         }, '');
 
-        window.location.href = `/result/${type}.html`;
+        window.location.href = `./result/${type}.html`;
         return;
     }
 

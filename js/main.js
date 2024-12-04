@@ -37,6 +37,7 @@ const current = document.querySelector('#current');
 const max = document.querySelector('#max');
 const text = document.querySelector('#question');
 const img = document.querySelector('#image img');
+const buttonWrap = document.querySelector('.button_area');
 const answer01 = document.querySelector('#answer01');
 const answer02 = document.querySelector('#answer02');
 
@@ -53,12 +54,49 @@ const renderQuestion = () => {
 const changeQuestion = () => {};
 
 const submitAnswer = (e) => {
-    if(currentIdx >= data.length - 1) return;
-    currentIdx++;
-    renderQuestion();
+    if (currentIdx >= data.length - 1) return;
+
+    outAnimation();
+    setTimeout(() => {
+        currentIdx++;
+        renderQuestion();
+    }, 500);
 };
 
-answer01.addEventListener('click', submitAnswer);
-answer02.addEventListener('click', submitAnswer);
+const outAnimation = () => {
+    text.classList.add('fade-up');
+    img.classList.add('fade-up');
+    buttonWrap.classList.add('fade-up');
 
-renderQuestion();
+    setTimeout(() => {
+        text.classList.remove('fade-up');
+        img.classList.remove('fade-up');
+        buttonWrap.classList.remove('fade-up');
+        inAnimation();
+    }, 600);
+};
+
+const inAnimation = () => {
+    text.classList.add('fade-down');
+    img.classList.add('fade-down');
+    buttonWrap.classList.add('fade-down');
+
+    setTimeout(() => {
+        text.classList.add('fade-down');
+        img.classList.add('fade- down');
+        buttonWrap.classList.add('fade-down');
+    }, 600);
+};
+
+const startTest = () => {
+    outAnimation();
+    setTimeout(() => {
+        answer01.removeAttribute('onclick');
+        answer02.removeAttribute('style');
+
+        answer01.addEventListener('click', submitAnswer);
+        answer02.addEventListener('click', submitAnswer);
+        document.querySelector('.top_area').removeAttribute('style');
+        renderQuestion();
+    }, 500);
+};

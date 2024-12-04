@@ -22,27 +22,34 @@ const data = [
     {
         type: 'ft',
         q: '외계로 메시지를 보낼 수 있다면, 어떤 메세지를 보낼 건가요?',
-        a: ['저는 여기 있어요!', '...'],
+        a: ['저 여기 있어요!', '...'],
     },
     {
         type: 'ft',
         q: '당신은 어떤 방식으로 다른 사람들의 고민을 들어주나요?',
-        a: ['공감해주고, 응원해줘요.', '실질적인 해결방안을 제시해요.'],
+        a: ['공감해주고 응원해줘요.', '실질적인 해결방안을 제시해요.'],
     },
 ];
 
 let currentIdx = 0;
+let isAnimation = false;
+
+const result = {
+    ei: 0,
+    ft: 0,
+};
 
 data.forEach((_, idx) => {
     const img = new Image();
     img.src = `./assets/images/q${idx + 1}.png`;
 });
 
-const hidden = { opacity: 0, transform: 'translateY(-10px)' };
+const hidden = { opacity: 0, transform: 'translateY(20px)' };
+const hidden2 = { opacity: 0, transform: 'translateY(-20px)' };
 const show = { opacity: 1, transform: 'translateY(0)' };
 const animationConfig = { easing: 'ease-in-out', fill: 'both', duration: 600 };
 
-const fadeIn = [hidden, show];
+const fadeIn = [hidden2, show];
 const fadeOut = [show, hidden];
 
 const current = document.querySelector('#current');
@@ -64,19 +71,20 @@ const renderQuestion = () => {
     answer02.innerText = data[currentIdx].a[1];
 };
 
-const changeQuestion = () => {};
-
 const submitAnswer = async (e) => {
     if (currentIdx >= data.length - 1) return;
 
+    if (isAnimation) return;
+    isAnimation = true;
     playAnimation([contentArea, text], fadeOut);
-    await playAnimation([answer01, answer02], fadeOut, { delay: 100 });
+    await playAnimation(buttonWrap, fadeOut, { delay: 100 });
 
     currentIdx++;
     renderQuestion();
 
     playAnimation([contentArea, text], fadeIn);
-    playAnimation([answer01, answer02], fadeIn, { delay: 100 });
+    await playAnimation(buttonWrap, fadeIn, { delay: 100 });
+    isAnimation = false;
 };
 
 const playAnimation = async (target, animation, config = {}) => {
@@ -93,15 +101,19 @@ const playAnimation = async (target, animation, config = {}) => {
 };
 
 const startTest = async () => {
+    if (isAnimation) return;
+    isAnimation = true;
     await playAnimation([contentArea, text, answer01], fadeOut);
 
     answer01.removeAttribute('onclick');
     answer02.removeAttribute('style');
 
-    answer01.addEventListener('click', submitAnswer);
-    answer02.addEventListener('click', submitAnswer);
+    buttonWrap.querySelectorAll('button').forEach((button, idx) => {
+        button.addEventListener('click', submitAnswer);
+    });
     document.querySelector('.top_area').removeAttribute('style');
     renderQuestion();
 
-    playAnimation([contentArea, text, answer01, answer02], fadeIn);
+    await playAnimation([contentArea, text, answer01, answer02], fadeIn);
+    isAnimation = false;
 };

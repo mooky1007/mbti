@@ -10,15 +10,15 @@ body { min-width: 320px; width: 100%; min-height: 100vh; min-height: 100svh; dis
 
 .progress_area { display: flex; justify-content: center; align-items: center; gap: 10px; } 
 .progress_bar { position: relative; width: 200px; height: 3px; background: #eee; } 
-.progress_bar_inner { position: absolute; top: 0; left: 0; width: 10%; height: 100%; background: #444; } 
+.progress_bar_inner { position: absolute; top: 0; left: 0; width: 10%; height: 100%; background: #2955a5; } 
 
 .content_area { aspect-ratio: 1/1; padding: 10%; } 
-.content_area .image_box { width: 100%; height: 100%; background: #f3f3f3; border-radius: 100%; } 
-.content_area .image_box img { } 
+.content_area .image_box { width: 100%; height: 100%; } 
+.content_area .image_box img { width: 100%; height: 100%; object-fit: contain; } 
 
 .text_area { padding-bottom: 10%; display: flex; justify-content: center; align-items: center; } 
 .text_area p { font-size: 18px; } 
 
 .button_area { } 
-.button_area button { display: block; width: 90%; height: 52px; margin: 0 auto; border: none; border-radius: 3px; color: #fff; background: #000;; } 
+.button_area button { display: block; width: 90%; height: 52px; margin: 0 auto; border: none; border-radius: 3px; color: #fff; background: #2955a5; } 
 .button_area button + button { margin-top: 20px; } 

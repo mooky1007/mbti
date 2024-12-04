@@ -33,6 +33,11 @@ const data = [
 
 let currentIdx = 0;
 
+data.forEach((_, idx) => {
+    const img = new Image();
+    img.src = `./assets/images/q${idx + 1}.png`;
+});
+
 const hidden = { opacity: 0, transform: 'translateY(-10px)' };
 const show = { opacity: 1, transform: 'translateY(0)' };
 const animationConfig = { easing: 'ease-in-out', fill: 'both', duration: 600 };

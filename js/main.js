@@ -71,10 +71,27 @@ const renderQuestion = () => {
     answer02.innerText = data[currentIdx].a[1];
 };
 
-const submitAnswer = async (e) => {
-    if (currentIdx >= data.length - 1) return;
-
+const submitAnswer = async (e, idx) => {
     if (isAnimation) return;
+
+    if (idx === 0) {
+        result[data[currentIdx].type] += 1;
+        console.log(data[currentIdx].type, '+1');
+    } else if (idx === 1) {
+        result[data[currentIdx].type] -= 1;
+        console.log(data[currentIdx].type, '-1');
+    }
+
+    if (currentIdx >= data.length - 1) {
+        const type = Object.keys(result).reduce((acc, cur) => {
+            const char = result[cur] > 0 ? cur[0] : cur[1];
+            return acc + char;
+        }, '');
+
+        window.location.href = `/result/${type}.html`;
+        return;
+    }
+
     isAnimation = true;
     playAnimation([contentArea, text], fadeOut);
     await playAnimation(buttonWrap, fadeOut, { delay: 100 });
@@ -109,7 +126,7 @@ const startTest = async () => {
     answer02.removeAttribute('style');
 
     buttonWrap.querySelectorAll('button').forEach((button, idx) => {
-        button.addEventListener('click', submitAnswer);
+        button.addEventListener('click', (e) => submitAnswer(e, idx));
     });
     document.querySelector('.top_area').removeAttribute('style');
     renderQuestion();

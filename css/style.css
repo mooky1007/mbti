@@ -2,13 +2,13 @@
 * { margin: 0; padding: 0; box-sizing: border-box; overscroll-behavior: none; font-family: 'SF_HailSnow', sans-serif; } 
 
 body { width: 100%; height: 100vh; background: #000; display: flex; justify-content: center; align-items: center; } 
-.container { width: 100%; max-width: 320px; background: rgb(46,79,101); background: linear-gradient(137deg, rgba(46,79,101,1) 0%, rgba(24,42,54,1) 35%); aspect-ratio: 1/2; } 
+.container { width: 100%; max-width: 480px; height: 100%; background: rgb(46,79,101); background: linear-gradient(137deg, rgba(46,79,101,1) 0%, rgba(24,42,54,1) 35%); } 
 .container header { height: 10%; } 
 .container .content { overflow: hidden; width: 100%; aspect-ratio: 1/0.8; margin: 20px 0; position: relative; } 
 .container .content .image_box { width: 100%; height: 100%; display: flex; justify-content: center; align-items: center; } 
 .container .content .image_box img { max-width: 60%; z-index: 2; position: relative; } 
 .container .content .image_box::after { content: ''; width: 45%; height: 45%; background: url('./assets/images/planet01.png') no-repeat center / cover; position: absolute; top: 60%; left: 40%; transform: translate(-50%, -50%); border-radius: 100%; opacity: 0.3; filter:blur(3px); } 
-.container .content .image_box::before { content: ''; width: 45%; height: 45%; position: absolute; top: 40%; left: 60%; transform: translate(-50%, -50%); border: 3px solid #fff; border-radius: 100%; mix-blend-mode:overlay; z-index: 2;;} 
+.container .content .image_box::before { content: ''; width: 45%; height: 45%; position: absolute; top: 40%; left: 60%; transform: translate(-50%, -50%); border: 3px solid #fff; border-radius: 100%; mix-blend-mode:overlay; z-index: 2;; } 
 .button_wrap button { display: block; width: 100%; width: 0%; margin: 0 auto; height: 36px; } 
 .button_wrap button + button { margin-top: 20px; } 
 

@@ -1,5 +1,5 @@
-@font-face { font-family: 'Ownglyph_ParkDaHyun'; src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/2411-3@1.0/Ownglyph_ParkDaHyun.woff2') format('woff2'); font-weight: normal; font-style: normal; } 
-* { margin: 0; padding: 0; box-sizing: border-box; overscroll-behavior: none; font-family: 'Ownglyph_ParkDaHyun', sans-serif; } 
+@font-face { font-family: 'Ownglyph_corncorn-Rg'; src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/2412-1@1.0/Ownglyph_corncorn-Rg.woff2') format('woff2'); font-weight: normal; font-style: normal; } 
+* { margin: 0; padding: 0; box-sizing: border-box; overscroll-behavior: none; font-family: 'Ownglyph_corncorn-Rg', sans-serif; } 
 
 body { min-width: 320px; width: 100%; min-height: 100vh; min-height: 100svh; display: flex; justify-content: center; align-items: center; color: #444; } 
 .container { width: 100%; max-width: 420px; } 
@@ -10,7 +10,7 @@ body { min-width: 320px; width: 100%; min-height: 100vh; min-height: 100svh; dis
 
 .progress_area { display: flex; justify-content: center; align-items: center; gap: 10px; } 
 .progress_bar { position: relative; width: 200px; height: 3px; background: #eee; } 
-.progress_bar_inner { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: #2955a5; transition: 0.2s ease-in-out; transform-origin: left; transform: scaleX(0);} 
+.progress_bar_inner { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: #2955a5; transition: 0.2s ease-in-out; transform-origin: left; transform: scaleX(0); } 
 
 .content_area { aspect-ratio: 1/1; padding: 10%; } 
 .content_area .image_box { width: 100%; height: 100%; } 
@@ -20,13 +20,18 @@ body { min-width: 320px; width: 100%; min-height: 100vh; min-height: 100svh; dis
 .text_area p { font-size: 20px; text-align: center; } 
 
 .button_area button { display: block; width: 90%; height: 52px; margin: 0 auto; border: none; border-radius: 3px; color: #fff; background: #1f4182; font-size: 18px; } 
-.button_area button + button { margin-top: 20px; } 
+.button_area button + button { margin-top: 20px; background: #3b5ea1; } 
 
-.fade-up { animation: fade-up 0.5s ease-in-out 0s both; } 
-.fade-down { animation: fade-up 0.5s ease-in-out 0s reverse both; } 
+.fade-up { animation: fade-up 0.5s ease-in-out 0s forwards; } 
+.fade-down { animation: fade-down 0.5s ease-in-out 0s forwards; } 
 
 @keyframes fade-up { 
  0% { opacity: 1; transform: translateY(0); } 
  100% { opacity: 0; transform: translateY(20px); } 
+ }
+ 
+ @keyframes fade-down { 
+ 0% { opacity: 0; transform: translateY(20px); } 
+ 100% { opacity: 1; transform: translateY(0); } 
  }
  

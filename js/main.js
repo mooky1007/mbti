@@ -1,18 +1,18 @@
 const data = [
     {
         type: 'ei',
-        q: '당신은 얼마나 멀리까지 비출 수 있나요?',
-        a: ['멀리까지 환히 비출 수 있어요!', '가까운 곳만 은은히 비추는 게 좋아요.'],
+        q: '밤하늘의 수많은 별들중 당신은 어떤 별인가요?',
+        a: ['가장 밝게 빛나는 별', '밝진 않지만 늘 제자리에 있는 별'],
     },
     {
         type: 'ei',
-        q: '당신은 어떤 모습으로 관찰되길 원하나요?',
-        a: ['반짝이며 많은 존재들이 주목하길 원해요.', '조용히, 천천히 알아봐 주길 원해요.'],
+        q: '당신의 별이 처음 발견되었어요.',
+        a: ['많은 사람들이 주목하고 활발히 연구되길 원해요.', '주목 받진 않아도 꾸준히 연구되길 원해요.'],
     },
     {
         type: 'ei',
-        q: '당신이 속한 우주에서, 당신은 어떻게 행동하나요?',
-        a: ['다른 별들과 활발히 상호작용하며 스스로를 빛내요.', '스스로 고요히 존재하며, 나를 찾는 이들에게만 모습을 보여줘요.'],
+        q: '당신의 별 주위는 어떤가요?',
+        a: ['많은 위성과 형제 행성들과 함께 존재해요.', '스스로 고요히 존재하고 있어요.'],
     },
     {
         type: 'ft',
@@ -21,17 +21,24 @@ const data = [
     },
     {
         type: 'ft',
-        q: '우주에 메시지를 보낸다면, 어떤 말을 할 건가요?',
-        a: ['우리는 함께 빛날 수 있어요!', '나는 여기 있어요.'],
+        q: '외계로 메시지를 보낼 수 있다면, 어떤 메세지를 보낼 건가요?',
+        a: ['저는 여기 있어요!', '...'],
     },
     {
         type: 'ft',
-        q: '어떤 방식으로 다른 존재들에게 영향을 미치나요?',
-        a: ['감정에 공감해주고, 힘을 북돋아줘요.', '실질적인 해결방안을 제시해요.'],
+        q: '당신은 어떤 방식으로 다른 사람들의 고민을 들어주나요?',
+        a: ['공감해주고, 응원해줘요.', '실질적인 해결방안을 제시해요.'],
     },
 ];
 
 let currentIdx = 0;
+
+const hidden = { opacity: 0, transform: 'translateY(-10px)' };
+const show = { opacity: 1, transform: 'translateY(0)' };
+const animationConfig = { easing: 'ease-in-out', fill: 'both', duration: 600 };
+
+const fadeIn = [hidden, show];
+const fadeOut = [show, hidden];
 
 const current = document.querySelector('#current');
 const max = document.querySelector('#max');
@@ -40,6 +47,7 @@ const img = document.querySelector('#image img');
 const buttonWrap = document.querySelector('.button_area');
 const answer01 = document.querySelector('#answer01');
 const answer02 = document.querySelector('#answer02');
+const contentArea = document.querySelector('.content_area');
 
 const renderQuestion = () => {
     current.innerText = currentIdx + 1;
@@ -53,39 +61,42 @@ const renderQuestion = () => {
 
 const changeQuestion = () => {};
 
-const submitAnswer = (e) => {
+const submitAnswer = async (e) => {
     if (currentIdx >= data.length - 1) return;
 
-    outAnimation();
-    setTimeout(() => {
-        currentIdx++;
-        renderQuestion();
-    }, 500);
+    playAnimation([contentArea, text], fadeOut);
+    await playAnimation([answer01, answer02], fadeOut, { delay: 100 });
+
+    currentIdx++;
+    renderQuestion();
+
+    playAnimation([contentArea, text], fadeIn);
+    playAnimation([answer01, answer02], fadeIn, { delay: 100 });
 };
 
-const outAnimation = () => {
-    text.classList.add('fade-up');
-    img.classList.add('fade-up');
-    buttonWrap.classList.add('fade-up');
+const playAnimation = async (target, animation, config = {}) => {
+    let targetArr;
+    if (Array.isArray(target)) targetArr = target;
+    else targetArr = [target];
 
-    setTimeout(() => {
-        text.classList.remove('fade-up');
-        img.classList.remove('fade-up');
-        buttonWrap.classList.remove('fade-up');
-    }, 600);
+    return Promise.all(
+        targetArr.map((el) => {
+            const animationOjb = el.animate(animation, { ...animationConfig, ...config });
+            return animationOjb.finished;
+        })
+    );
 };
 
-const inAnimation = () => {};
+const startTest = async () => {
+    await playAnimation([contentArea, text, answer01], fadeOut);
 
-const startTest = () => {
-    outAnimation();
-    setTimeout(() => {
-        answer01.removeAttribute('onclick');
-        answer02.removeAttribute('style');
+    answer01.removeAttribute('onclick');
+    answer02.removeAttribute('style');
 
-        answer01.addEventListener('click', submitAnswer);
-        answer02.addEventListener('click', submitAnswer);
-        document.querySelector('.top_area').removeAttribute('style');
-        renderQuestion();
-    }, 500);
+    answer01.addEventListener('click', submitAnswer);
+    answer02.addEventListener('click', submitAnswer);
+    document.querySelector('.top_area').removeAttribute('style');
+    renderQuestion();
+
+    playAnimation([contentArea, text, answer01, answer02], fadeIn);
 };

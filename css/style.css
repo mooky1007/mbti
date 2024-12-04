@@ -1,46 +1,24 @@
 @font-face { font-family: 'SF_HailSnow'; src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2106@1.1/SF_HailSnow.woff') format('woff'); font-weight: normal; font-style: normal; } 
 * { margin: 0; padding: 0; box-sizing: border-box; overscroll-behavior: none; font-family: 'SF_HailSnow', sans-serif; } 
 
-body { width: 100%; height: 100vh; background: #000; display: flex; justify-content: center; align-items: center; } 
-.container { width: 100%; max-width: 480px; height: 100%; background: rgb(46,79,101); background: linear-gradient(137deg, rgba(46,79,101,1) 0%, rgba(24,42,54,1) 35%); } 
-.container header { height: 10%; } 
-.container .content { overflow: hidden; width: 100%; aspect-ratio: 1/0.8; margin: 20px 0; position: relative; } 
-.container .content .image_box { width: 100%; height: 100%; display: flex; justify-content: center; align-items: center; } 
-.container .content .image_box img { max-width: 60%; z-index: 2; position: relative;}
-.container .content .image_box::after { opacity: 0; animation: fadeIn 1.0s ease-in-out forwards; animation-delay: 0.3s; content: ''; width: 45%; aspect-ratio: 1/1; background: url('../assets/images/planet01_a.png') no-repeat center / cover; position: absolute; top: 60%; left: 40%; transform: translate(-50%, -50%); border-radius: 100%; filter:blur(3px); } 
-.container .content .image_box::before { opacity: 0; animation: fadeIn2 2.0s ease-in-out forwards; animation-delay: 0.15s; content: ''; width: 45%; aspect-ratio: 1/1; position: absolute; top: 40%; left: 60%; transform: translate(-50%, -50%); border: 3px solid #fff; border-radius: 100%; mix-blend-mode:overlay; z-index: 2;; } 
+body { min-width: 320px; width: 100%; min-height: 100vh; min-height: 100svh; display: flex; justify-content: center; align-items: center; } 
 
-.button_wrap { margin-top: 40px; } 
-.button_wrap button { display: block; width: 80%; margin: 0 auto; height: 52px; border-radius: 5px; border: none; background: #000; color: #fff; } 
-.button_wrap button + button { margin-top: 20px; } 
+.container { width: 100%; max-width: 420px; } 
+.container section { width: 100%; } 
 
-.result_wrap { color: #fff; } 
-.result_wrap h2 { font-size: 24px; text-align: center; margin-bottom: 20px; } 
-.result_wrap ul { display: flex; flex-direction: column; gap: 10px; width: 100%; max-width: 80vmin; margin: 0 auto; } 
-.result_wrap ul li { list-style: none; font-size: 14px; word-break: keep-all; text-align: center; line-height: 1.3; } 
-.result_wrap ul li strong { color: #9dffbb; } 
+.title_area p { font-size: 1rem; text-align: center; margin-bottom: 10px; } 
 
-.container .content .image_box .cloud_01 { animation: fadeIn3 1.0s ease-in-out forwards; animation-delay: 0.3s; width: 70%; position: absolute; top: 64%; left: 80%; transform: translate(-50%, -50%); opacity: 0; filter: blur(4px); z-index: 3; } 
-.container .content .image_box .cloud_02 { animation: fadeIn4 1.0s ease-in-out forwards; animation-delay: 0.6s; width: 60%; position: absolute; top: 35%; left: 29%; transform: translate(-50%, -50%); opacity: 0; filter: blur(3px); z-index: 1; } 
+.progress_area { display: flex; justify-content: center; align-items: center; gap: 10px; } 
+.progress_bar { position: relative; width: 200px; height: 3px; background: #eee; } 
+.progress_bar_inner { position: absolute; top: 0; left: 0; width: 10%; height: 100%; background: #444; } 
 
-[data-aos=fade-up] { transform: translate3d(0, 5px, 0); } 
+.content_area { aspect-ratio: 1/1; padding: 10%; } 
+.content_area .image_box { width: 100%; height: 100%; background: #f3f3f3; border-radius: 100%; } 
+.content_area .image_box img { } 
 
-@keyframes fadeIn { 
- 0% { opacity: 0; } 
- 100% { opacity: 0.1; } 
- }
+.text_area { padding-bottom: 10%; display: flex; justify-content: center; align-items: center; } 
+.text_area p { font-size: 18px; } 
 
- @keyframes fadeIn2 { 
- 0% { opacity: 0; } 
- 100% { opacity: 0.2; } 
- }
-
- @keyframes fadeIn3 { 
- 0% { opacity: 0; transform: translate(-50%, -51%); } 
- 100% { opacity: 0.8; transform: translate(-50%, -50%); } 
- }
-
- @keyframes fadeIn4 { 
- 0% { opacity: 0; transform: translate(-50%, -51%); } 
- 100% { opacity: 0.3; transform: translate(-50% -50%); } 
- }
+.button_area { } 
+.button_area button { display: block; width: 90%; height: 52px; margin: 0 auto; border: none; border-radius: 3px; color: #fff; background: #000;; } 
+.button_area button + button { margin-top: 20px; } 

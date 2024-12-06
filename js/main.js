@@ -31,6 +31,13 @@ const data = [
     },
 ];
 
+const resultData = {
+    ef: {},
+    et: {},
+    if: {},
+    it: {},
+};
+
 let currentIdx = 0;
 let isAnimation = false;
 
@@ -88,7 +95,7 @@ const submitAnswer = async (e, idx) => {
             return acc + char;
         }, '');
 
-        window.location.href = `./result/${type}.html`;
+        renderResultPage(type);
         return;
     }
 
@@ -132,5 +139,19 @@ const startTest = async () => {
     renderQuestion();
 
     await playAnimation([contentArea, text, answer01, answer02], fadeIn);
+    isAnimation = false;
+};
+
+const renderResultPage = async (type) => {
+    isAnimation = true;
+    playAnimation([contentArea, text], fadeOut);
+    await playAnimation(buttonWrap, fadeOut, { delay: 100 });
+
+    img.setAttribute('src', `./assets/images/${type}.png`);
+    answer01.innerText = '다시하기';
+    answer02.remove();
+
+    playAnimation([contentArea, text], fadeIn);
+    await playAnimation(buttonWrap, fadeIn, { delay: 100 });
     isAnimation = false;
 };

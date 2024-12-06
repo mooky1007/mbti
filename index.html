@@ -12,34 +12,39 @@
 
 <body>
   <div class="container">
-    <section class="top_area" style="opacity: 0;">
-      <div class="title_area">
-        <p>
-          <span id="current">0</span>
-          <span>/</span>
-          <span id="max">6</span>
+    <header>
+      <h1>나와 닮은 행성 찾기</h1>
+    </header>
+    <main>
+      <section class="top_area">
+        <div class="title_area">
+          <p>
+            <span id="current">0</span>
+            <span>/</span>
+            <span id="max">6</span>
+          </p>
+        </div>
+        <div class="progress_area">
+          <div class="progress_bar">
+            <div class="progress_bar_inner" id="progress"></div>
+          </div>
+        </div>
+      </section>
+      <section class="content_area">
+        <div class="image_box" id="image">
+          <img src="./assets/images/cover.png" alt="">
+        </div>
+      </section>
+      <div class="text_area">
+        <p id="question">
+          우주 어딘가에 존재하는 나와 닮은 행성을 알아봐요.
         </p>
       </div>
-      <div class="progress_area">
-        <div class="progress_bar">
-          <div class="progress_bar_inner" id="progress"></div>
-        </div>
-      </div>
-    </section>
-    <section class="content_area">
-      <div class="image_box" id="image">
-        <img src="./assets/images/cover.png" alt="">
-      </div>
-    </section>
-    <div class="text_area">
-      <p id="question">
-        우주 어딘가에 존재하는 나와 닮은 행성을 알아봐요.
-      </p>
-    </div>
-    <section class="button_area">
-      <button id="answer01" onclick="startTest();">나와 닮은 행성 찾기</button>
-      <button id="answer02" style="opacity: 0;">가까운 곳만 은은히 비추는 게 좋아요.</button>
-    </section>
+      <section class="button_area">
+        <button id="answer01" onclick="startTest();">나와 닮은 행성 찾기</button>
+        <button id="answer02" style="opacity: 0;">가까운 곳만 은은히 비추는 게 좋아요.</button>
+      </section>
+    </main>
   </div>
 
   <script src="./js/main.js"></script>

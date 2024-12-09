@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>나와 닮은 행성찾기</title>
-  <link rel="shortcut icon" href="./assets/images/space03_venus.png" type="image/x-icon">
+  <link rel="shortcut icon" href="./assets/images/ef.png" type="image/x-icon">
   <meta property="og:image" content="./assets/images/cover.png" />
   <link rel="stylesheet" href="./css/style.css">
 </head>
@@ -17,37 +17,32 @@
     </header>
     <main>
       <section class="top_area">
-        <div class="title_area">
-          <p>
-            <span id="current">0</span>
-            <span>/</span>
-            <span id="max">6</span>
-          </p>
-        </div>
         <div class="progress_area">
+          <p>
+            <span>0</span>
+            <span>/</span>
+            <span>6</span>
+          </p>
           <div class="progress_bar">
-            <div class="progress_bar_inner" id="progress"></div>
+            <span class="inner"></span>
           </div>
         </div>
       </section>
       <section class="content_area">
-        <div class="image_box" id="image">
+        <div class="image_box">
           <img src="./assets/images/cover.png" alt="">
         </div>
       </section>
       <div class="text_area">
-        <p id="question">
-          우주 어딘가에 존재하는 나와 닮은 행성을 알아봐요.
-        </p>
+        <p>우주 어딘가에 존재하는 나와 닮은 행성을 알아봐요.</p>
       </div>
       <section class="button_area">
-        <button id="answer01" onclick="startTest();">나와 닮은 행성 찾기</button>
-        <button id="answer02" style="opacity: 0;">가까운 곳만 은은히 비추는 게 좋아요.</button>
+        <button>나와 닮은 행성 찾기</button>
       </section>
     </main>
   </div>
 
-  <script src="./js/main.js"></script>
+  <script src="./js/main.js" type="module"></script>
 </body>
 
 </html>

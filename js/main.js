@@ -1,157 +1,136 @@
-const data = [
-    {
-        type: 'ei',
-        q: '밤하늘의 수많은 별들중 당신은 어떤 별인가요?',
-        a: ['가장 밝게 빛나는 별', '밝진 않지만 늘 제자리에 있는 별'],
-    },
-    {
-        type: 'ei',
-        q: '당신의 별이 처음 발견되었어요.',
-        a: ['많은 사람들이 주목하고 활발히 연구되길 원해요.', '주목 받진 않아도 꾸준히 연구되길 원해요.'],
-    },
-    {
-        type: 'ei',
-        q: '당신의 별 주위는 어떤가요?',
-        a: ['많은 위성과 형제 행성들과 함께 존재해요.', '스스로 고요히 존재하고 있어요.'],
-    },
-    {
-        type: 'ft',
-        q: '어떤 에너지가 당신을 움직이게 하나요?',
-        a: ['주변 존재들의 따뜻한 관심과 유대감', '스스로 정한 논리적이고 명확한 목표'],
-    },
-    {
-        type: 'ft',
-        q: '외계로 메시지를 보낼 수 있다면, 어떤 메세지를 보낼 건가요?',
-        a: ['저 여기 있어요!', '...'],
-    },
-    {
-        type: 'ft',
-        q: '당신은 어떤 방식으로 다른 사람들의 고민을 들어주나요?',
-        a: ['공감해주고 응원해줘요.', '실질적인 해결방안을 제시해요.'],
-    },
-];
-
-const resultData = {
-    ef: {},
-    et: {},
-    if: {},
-    it: {},
-};
-
-let currentIdx = 0;
-let isAnimation = false;
-
-const result = {
-    ei: 0,
-    ft: 0,
-};
+import { data, resultData } from '../data.js';
 
 data.forEach((_, idx) => {
     const img = new Image();
     img.src = `./assets/images/q${idx + 1}.png`;
 });
 
-const hidden = { opacity: 0, transform: 'translateY(20px)' };
-const hidden2 = { opacity: 0, transform: 'translateY(-20px)' };
-const show = { opacity: 1, transform: 'translateY(0)' };
-const animationConfig = { easing: 'ease-in-out', fill: 'both', duration: 600 };
+const mbti = () => {
+    let currentIdx = 0;
+    let isAnimation = false;
 
-const fadeIn = [hidden2, show];
-const fadeOut = [show, hidden];
+    const result = [];
 
-const current = document.querySelector('#current');
-const max = document.querySelector('#max');
-const text = document.querySelector('#question');
-const img = document.querySelector('#image img');
-const buttonWrap = document.querySelector('.button_area');
-const answer01 = document.querySelector('#answer01');
-const answer02 = document.querySelector('#answer02');
-const contentArea = document.querySelector('.content_area');
+    const show = { opacity: 1, transform: 'translateY(0)' };
+    const show2 = { opacity: 1 };
 
-const renderQuestion = () => {
-    current.innerText = currentIdx + 1;
-    max.innerText = data.length;
-    progress.style.transform = `scaleX(${(currentIdx + 1) / data.length})`;
-    img.setAttribute('src', `./assets/images/q${currentIdx + 1}.png`);
-    text.innerText = data[currentIdx].q;
-    answer01.innerText = data[currentIdx].a[0];
-    answer02.innerText = data[currentIdx].a[1];
+    const hidden2 = { opacity: 0, transform: 'translateY(20px)' };
+    const hidden3 = { opacity: 0 };
+
+    const animationConfig = { easing: 'ease-in-out', fill: 'both', duration: 600 };
+
+    const fadeUp = [hidden2, show];
+    const fadeIn = [hidden3, show2];
+    const fadeOut = [show2, hidden3];
+
+    const current = document.querySelector('.progress_area p span:first-child');
+    const max = document.querySelector('.progress_area p span:last-child');
+    const progress = document.querySelector('.progress_bar .inner');
+    const text = document.querySelector('.text_area p');
+    const imageBox = document.querySelector('.image_box');
+    const img = document.querySelector('.image_box img');
+    const buttonWrap = document.querySelector('.button_area');
+
+    const playAnimation = async (target, animation, config = {}) => {
+        let targetArr;
+        if (Array.isArray(target)) targetArr = target;
+        else targetArr = [target];
+
+        return Promise.all(
+            targetArr.map((el) => {
+                const animationOjb = el.animate(animation, { ...animationConfig, ...config });
+                return animationOjb.finished;
+            })
+        );
+    };
+
+    const pageOut = async () => {
+        if (isAnimation) return;
+        isAnimation = true;
+        await playAnimation([imageBox, buttonWrap, text], fadeOut);
+
+        return true;
+    };
+
+    const pageIn = async () => {
+        playAnimation(imageBox, fadeIn);
+        await playAnimation(text, fadeUp);
+        playAnimation(buttonWrap, fadeIn);
+        isAnimation = false;
+        return true;
+    };
+    const startTest = async () => {
+        await pageOut();
+        renderContent();
+        pageIn();
+    };
+
+    const renderContent = (idx = 0) => {
+        current.innerText = idx + 1;
+        max.innerText = data.length;
+        progress.style.transform = `scaleX(${(idx + 1) / data.length})`;
+        img.setAttribute('src', `./assets/images/q${idx + 1}.png`);
+        text.innerText = data[idx].q;
+
+        buttonWrap.querySelectorAll('button').forEach((button) => button.remove());
+        data[idx].a.forEach((a, idx) => {
+            const button = document.createElement('button');
+            button.innerText = a;
+            button.addEventListener('click', (e) => submitAnswer(e, idx));
+            buttonWrap.append(button);
+        });
+    };
+
+    const renderResult = async (type = 'ef') => {
+        console.log(type, result);
+        document.querySelector('.top_area').style.display = 'none';
+        buttonWrap.querySelectorAll('button').forEach((button) => button.remove());
+        img.setAttribute('src', `./assets/images/${type}.png`);
+
+        text.innerHTML = '';
+
+        const title = document.createElement('h2');
+        const desc = document.createElement('p');
+        const ul = document.createElement('ul');
+        title.textContent = resultData[type].name;
+        desc.innerHTML = resultData[type].desc;
+        resultData[type].list.forEach((listItem) => {
+            const li = document.createElement('li');
+            li.textContent = listItem;
+            ul.append(li);
+        });
+
+        text.append(title, desc, ul);
+
+        const button = document.createElement('button');
+        button.innerText = '다시하기';
+        button.addEventListener('click', (e) => restart);
+        buttonWrap.append(button);
+    };
+
+    const submitAnswer = async (e, idx) => {
+        if (isAnimation) return;
+        await pageOut();
+
+        result.push(data[currentIdx].type[idx]);
+
+        if (result.length >= data.length) {
+            renderResult();
+        } else {
+            currentIdx++;
+            renderContent(currentIdx);
+        }
+
+        pageIn();
+    };
+
+    const restart = () => {
+        currentIdx = 0;
+        result = [];
+    };
+
+    buttonWrap.querySelector('button').addEventListener('click', startTest);
+    renderResult();
 };
 
-const submitAnswer = async (e, idx) => {
-    if (isAnimation) return;
-
-    if (idx === 0) {
-        result[data[currentIdx].type] += 1;
-        console.log(data[currentIdx].type, '+1');
-    } else if (idx === 1) {
-        result[data[currentIdx].type] -= 1;
-        console.log(data[currentIdx].type, '-1');
-    }
-
-    if (currentIdx >= data.length - 1) {
-        const type = Object.keys(result).reduce((acc, cur) => {
-            const char = result[cur] > 0 ? cur[0] : cur[1];
-            return acc + char;
-        }, '');
-
-        renderResultPage(type);
-        return;
-    }
-
-    isAnimation = true;
-    playAnimation([contentArea, text], fadeOut);
-    await playAnimation(buttonWrap, fadeOut, { delay: 100 });
-
-    currentIdx++;
-    renderQuestion();
-
-    playAnimation([contentArea, text], fadeIn);
-    await playAnimation(buttonWrap, fadeIn, { delay: 100 });
-    isAnimation = false;
-};
-
-const playAnimation = async (target, animation, config = {}) => {
-    let targetArr;
-    if (Array.isArray(target)) targetArr = target;
-    else targetArr = [target];
-
-    return Promise.all(
-        targetArr.map((el) => {
-            const animationOjb = el.animate(animation, { ...animationConfig, ...config });
-            return animationOjb.finished;
-        })
-    );
-};
-
-const startTest = async () => {
-    if (isAnimation) return;
-    isAnimation = true;
-    await playAnimation([contentArea, text, answer01], fadeOut);
-
-    answer01.removeAttribute('onclick');
-    answer02.removeAttribute('style');
-
-    buttonWrap.querySelectorAll('button').forEach((button, idx) => {
-        button.addEventListener('click', (e) => submitAnswer(e, idx));
-    });
-    document.querySelector('.top_area').removeAttribute('style');
-    renderQuestion();
-
-    await playAnimation([contentArea, text, answer01, answer02], fadeIn);
-    isAnimation = false;
-};
-
-const renderResultPage = async (type) => {
-    isAnimation = true;
-    playAnimation([contentArea, text], fadeOut);
-    await playAnimation(buttonWrap, fadeOut, { delay: 100 });
-
-    img.setAttribute('src', `./assets/images/${type}.png`);
-    answer01.innerText = '다시하기';
-    answer02.remove();
-
-    playAnimation([contentArea, text], fadeIn);
-    await playAnimation(buttonWrap, fadeIn, { delay: 100 });
-    isAnimation = false;
-};
+mbti();
